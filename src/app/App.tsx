@@ -410,14 +410,14 @@ function App() {
           <div onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
             <Image
               src="/openai-logomark.svg"
-              alt="OpenAI Logo"
+              alt="ChatSites Logo"
               width={20}
               height={20}
               className="mr-2"
             />
           </div>
           <div>
-            Realtime API <span className="text-gray-500">Agents</span>
+            ChatSites™ AI <span className="text-gray-500">Agents</span>
           </div>
         </div>
         <div className="flex items-center">
