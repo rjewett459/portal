@@ -404,22 +404,17 @@ function App() {
   const agentSetKey = searchParams.get("agentConfig") || "default";
 
   return (
-    <div className="text-base flex flex-col h-screen bg-gray-100 text-gray-800 relative">
-      <div className="p-5 text-lg font-semibold flex justify-between items-center">
-        <div className="flex items-center">
-          <div onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
-            <Image
-              src="/openai-logomark.svg"
-              alt="ChatSites Logo"
-              width={35}
-              height={35}
-              className="mr-2"
-            />
-          </div>
-          <div>
-            ChatSites™ AI <span className="text-gray-500">Agents</span>
-          </div>
-        </div>
+    <div className="text-base flex flex-col h-screen bg-gray-100 text-gray-800 relative max-w-md mx-auto sm:max-w-full">
+  {/* Header */}
+  <div className="p-4 sm:p-5 text-lg font-semibold flex flex-wrap justify-between items-center">
+    <div className="flex items-center">
+      <div onClick={() => window.location.reload()} className="cursor-pointer">
+        <Image src="/openai-logomark.svg" alt="ChatSites Logo" width={35} height={35} className="mr-2" />
+      </div>
+      <div>ChatSites™ AI <span className="text-gray-500">Agents</span></div>
+    </div>
+  </div>
+
         <div className="flex items-center">
           <label className="flex items-center text-base gap-1 mr-2 font-medium">
             Scenario
