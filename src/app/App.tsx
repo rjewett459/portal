@@ -411,8 +411,8 @@ function App() {
             <Image
               src="/openai-logomark.svg"
               alt="ChatSites Logo"
-              width={20}
-              height={20}
+              width={35}
+              height={35}
               className="mr-2"
             />
           </div>
