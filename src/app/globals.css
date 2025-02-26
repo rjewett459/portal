@@ -14,9 +14,46 @@
   }
 }
 
+/* Ensure the body fills the screen properly */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  min-height: 100vh;
+  font-size: 16px; /* Default for readability */
 }
+
+/* Make all select elements touch-friendly */
+select {
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+}
+
+/* Improve button accessibility */
+button {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Make dropdowns and buttons larger on mobile */
+@media (max-width: 768px) {
+  .text-base {
+    font-size: 14px;
+  }
+
+  .p-5 {
+    padding: 12px;
+  }
+
+  .flex {
+    flex-direction: column;
+  }
+
+  .gap-2 {
+    gap: 8px;
+  }
+
+  /* Prevent overflow issues */
+  .overflow-hidden {
+    overflow-y: auto;
+  }
+}
+
