@@ -7,7 +7,7 @@ export async function GET() {
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${process.env.EPHEMERAL_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
