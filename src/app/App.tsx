@@ -409,12 +409,13 @@ function App() {
         <div className="flex items-center">
           <div onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
             <Image
-              src="/chatsites-logo.png"
-              alt="ChatSites Logo"
-              width={35}
-              height={35}
-              className="mr-2"
+            src="/chatsites-logo.png"
+            alt="ChatSites Logo"
+            width={35}
+            height={35}
+            className="mr-2 transparent-logo"
             />
+
           </div>
           <div>
             ChatSites™ AI <span className="text-gray-500">Portal</span>
