@@ -3,5 +3,4 @@ const realEstateAgents = [
     { name: "Appointment Setter", instructions: "Schedule property viewings.", tools: [] },
     { name: "Mortgage Advisor", instructions: "Provide mortgage insights.", tools: [] },
   ];
-  
   export default realEstateAgents;
