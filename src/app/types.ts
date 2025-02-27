@@ -27,14 +27,14 @@ export interface Tool {
 
 export interface AgentConfig {
   name: string;
-  publicDescription: string; // gives context to agent transfer tool
+  publicDescription?: string; // gives context to agent transfer tool
   instructions: string;
   tools: Tool[];
   toolLogic?: Record<
     string,
     (args: any, transcriptLogsFiltered: TranscriptItem[]) => Promise<any> | any
   >;
-  downstreamAgents?: AgentConfig[] | { name: string; publicDescription: string }[];
+  downstreamAgents?: AgentConfig[] | { name: string; publicDescription?: string }[];
 }
 
 export type AllAgentConfigsType = Record<string, AgentConfig[]>;
