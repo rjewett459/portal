@@ -409,7 +409,7 @@ function App() {
         <div className="flex items-center">
           <div onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
             <Image
-              src="/openai-logomark.svg"
+              src="/chatsites-logo.png"
               alt="ChatSites Logo"
               width={35}
               height={35}
