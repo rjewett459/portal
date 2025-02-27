@@ -5,9 +5,6 @@ import healthcareAgents from "./healthcareAgents";
 import financeAgents from "./financeAgents";
 import educationAgents from "./educationAgents";
 
-// src/app/agentConfigs/index.ts
-
-// Define agents by industry (Scenario)
 export const allAgentSets: AllAgentConfigsType = {
   "Real Estate": realEstateAgents,
   "E-commerce": ecomAgents,
