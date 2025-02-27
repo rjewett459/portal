@@ -409,6 +409,7 @@ function App() {
         <div className="flex items-center">
           <div onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
             <Image
+<<<<<<< HEAD
             src="/chatsites-logo.png"
             alt="ChatSites Logo"
             width={35}
