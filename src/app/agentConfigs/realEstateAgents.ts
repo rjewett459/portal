@@ -1,8 +1,8 @@
-const realEstateAgents = [
-    { name: "Property Guide", instructions: "Assist with property searches.", tools: [] },
-    { name: "Appointment Setter", instructions: "Schedule property viewings.", tools: [] },
-    { name: "Mortgage Advisor", instructions: "Provide mortgage insights.", tools: [] },
-  ];
-  
-  export default realEstateAgents;
-  
+export const realEstateAgents: AgentConfig[] = [
+  {
+    name: "Property Finder",
+    instructions: "Help users find real estate listings.",
+    tools: [],
+    publicDescription: "An AI assistant for searching real estate listings.", // ✅ Added
+  },
+];
