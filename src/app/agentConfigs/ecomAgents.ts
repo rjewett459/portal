@@ -1,8 +1,7 @@
-export const ecomAgents: AgentConfig[] = [
-  {
-    name: "Product Recommender",
-    instructions: "Suggest products based on user preferences.",
-    tools: [],
-    publicDescription: "An AI assistant for recommending e-commerce products.", // ✅ Added
-  },
-];
+// src/app/agentConfigs/ecomAgents.ts
+const ecomAgents = [
+    { name: "Product Recommender", instructions: "Suggest products to users.", tools: [] },
+    { name: "Order Tracking Bot", instructions: "Provide order status updates.", tools: [] },
+    { name: "Upsell Agent", instructions: "Recommend related items.", tools: [] },
+  ];
+  export default ecomAgents;
