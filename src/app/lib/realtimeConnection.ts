@@ -1,7 +1,7 @@
 import { RefObject } from "react";
 
 export async function createRealtimeConnection(
-  OPENAI_API_KEY: string,
+  EPHEMERAL_KEY: string,
   audioElement: RefObject<HTMLAudioElement | null>
 ): Promise<{ pc: RTCPeerConnection; dc: RTCDataChannel }> {
   const pc = new RTCPeerConnection();
@@ -27,7 +27,7 @@ export async function createRealtimeConnection(
     method: "POST",
     body: offer.sdp,
     headers: {
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
+      Authorization: `Bearer ${EPHEMERAL_KEY}`,
       "Content-Type": "application/sdp",
     },
   });
