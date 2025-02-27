@@ -422,7 +422,7 @@ function App() {
         </div>
         <div className="flex items-center">
           <label className="flex items-center text-base gap-1 mr-2 font-medium">
-            Scenario
+            Industry
           </label>
           <div className="relative inline-block">
             <select
