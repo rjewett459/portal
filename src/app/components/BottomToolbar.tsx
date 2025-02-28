@@ -15,7 +15,7 @@ interface BottomToolbarProps {
   setIsAudioPlaybackEnabled: (val: boolean) => void;
 }
 
-export default function BottomToolbar({
+function BottomToolbar({
   sessionStatus,
   onToggleConnection,
   isPTTActive,
@@ -31,92 +31,90 @@ export default function BottomToolbar({
   const isConnected = sessionStatus === "CONNECTED";
   const isConnecting = sessionStatus === "CONNECTING";
 
-  const connectionLabel = isConnected
-    ? "Disconnect"
-    : isConnecting
-    ? "Connecting..."
-    : "Connect";
+  function getConnectionButtonLabel() {
+    if (isConnected) return "Disconnect";
+    if (isConnecting) return "Connecting...";
+    return "Connect";
+  }
 
-  // Example: unify button styles
-  const baseButtonClasses = "rounded-full py-2 px-4 text-sm font-medium";
+  function getConnectionButtonClasses() {
+    const baseClasses = "text-white text-base p-2 w-36 rounded-full h-full";
+    const cursorClass = isConnecting ? "cursor-not-allowed" : "cursor-pointer";
 
-  const connectionButtonClasses = [
-    baseButtonClasses,
-    isConnected
-      ? "bg-red-600 text-white"
-      : "bg-black text-white",
-    isConnecting ? "cursor-not-allowed opacity-70" : "cursor-pointer",
-  ].join(" ");
+    if (isConnected) {
+      // Connected -> label "Disconnect" -> red
+      return `bg-red-600 hover:bg-red-700 ${cursorClass} ${baseClasses}`;
+    }
+    // Disconnected or connecting -> label is either "Connect" or "Connecting" -> black
+    return `bg-black hover:bg-gray-900 ${cursorClass} ${baseClasses}`;
+  }
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-white shadow-md flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-2 sm:p-4 z-50">
-      {/* Connection Button */}
+    <div className="p-4 flex flex-row items-center justify-center gap-x-8">
       <button
         onClick={onToggleConnection}
-        className={connectionButtonClasses}
+        className={getConnectionButtonClasses()}
         disabled={isConnecting}
       >
-        {connectionLabel}
+        {getConnectionButtonLabel()}
       </button>
 
-      {/* Push to Talk Section */}
-      <div className="flex items-center gap-2">
-        <label className="cursor-pointer flex items-center gap-1">
-          <input
-            id="push-to-talk"
-            type="checkbox"
-            checked={isPTTActive}
-            onChange={e => setIsPTTActive(e.target.checked)}
-            disabled={!isConnected}
-          />
-          <span className="text-sm">Push to talk</span>
+      <div className="flex flex-row items-center gap-2">
+        <input
+          id="push-to-talk"
+          type="checkbox"
+          checked={isPTTActive}
+          onChange={e => setIsPTTActive(e.target.checked)}
+          disabled={!isConnected}
+          className="w-4 h-4"
+        />
+        <label htmlFor="push-to-talk" className="flex items-center cursor-pointer">
+          Push to talk
         </label>
-
         <button
           onMouseDown={handleTalkButtonDown}
           onMouseUp={handleTalkButtonUp}
           onTouchStart={handleTalkButtonDown}
           onTouchEnd={handleTalkButtonUp}
           disabled={!isPTTActive}
-          className={[
-            baseButtonClasses,
-            "bg-gray-200 text-black",
-            !isPTTActive && "opacity-50 cursor-not-allowed",
-            isPTTUserSpeaking && "bg-gray-300",
-          ]
-            .filter(Boolean)
-            .join(" ")}
+          className={
+            (isPTTUserSpeaking ? "bg-gray-300" : "bg-gray-200") +
+            " py-1 px-4 cursor-pointer rounded-full" +
+            (!isPTTActive ? " bg-gray-100 text-gray-400" : "")
+          }
         >
           Talk
         </button>
       </div>
 
-      {/* Audio Playback */}
-      <div className="flex items-center gap-2">
-        <label className="cursor-pointer flex items-center gap-1">
-          <input
-            id="audio-playback"
-            type="checkbox"
-            checked={isAudioPlaybackEnabled}
-            onChange={e => setIsAudioPlaybackEnabled(e.target.checked)}
-            disabled={!isConnected}
-          />
-          <span className="text-sm">Audio</span>
+      <div className="flex flex-row items-center gap-2">
+        <input
+          id="audio-playback"
+          type="checkbox"
+          checked={isAudioPlaybackEnabled}
+          onChange={e => setIsAudioPlaybackEnabled(e.target.checked)}
+          disabled={!isConnected}
+          className="w-4 h-4"
+        />
+        <label htmlFor="audio-playback" className="flex items-center cursor-pointer">
+          Audio playback
         </label>
       </div>
 
-      {/* Logs */}
-      <div className="flex items-center gap-2">
-        <label className="cursor-pointer flex items-center gap-1">
-          <input
-            id="logs"
-            type="checkbox"
-            checked={isEventsPaneExpanded}
-            onChange={e => setIsEventsPaneExpanded(e.target.checked)}
-          />
-          <span className="text-sm">Logs</span>
+      <div className="flex flex-row items-center gap-2">
+        <input
+          id="logs"
+          type="checkbox"
+          checked={isEventsPaneExpanded}
+          onChange={e => setIsEventsPaneExpanded(e.target.checked)}
+          className="w-4 h-4"
+        />
+        <label htmlFor="logs" className="flex items-center cursor-pointer">
+          Logs
         </label>
       </div>
     </div>
   );
 }
+
+export default BottomToolbar;
