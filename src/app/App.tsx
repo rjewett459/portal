@@ -419,71 +419,66 @@ function App() {
 
           </div>
           <div>
-            ChatSites™ AI <span className="text-gray-500">Portal</span>
+            ChatSites™ Portal<span className="text-gray-500"></span>
           </div>
         </div>
-        <div className="flex items-center">
-          <label className="flex items-center text-base gap-1 mr-2 font-medium">
-            Industry
-          </label>
-          <div className="relative inline-block">
-            <select
-              value={agentSetKey}
-              onChange={handleAgentChange}
-              className="appearance-none border border-gray-300 rounded-lg text-base px-2 py-1 pr-8 cursor-pointer font-normal focus:outline-none"
-            >
-              {Object.keys(allAgentSets).map((agentKey) => (
-                <option key={agentKey} value={agentKey}>
-                  {agentKey}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-gray-600">
-              <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 10.44l3.71-3.21a.75.75 0 111.04 1.08l-4.25 3.65a.75.75 0 01-1.04 0L5.21 8.27a.75.75 0 01.02-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-          </div>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 w-full">
+  {/* Industry Dropdown */}
+  <div className="flex items-center w-full sm:w-auto">
+    <label className="text-base font-medium mr-2">Industry</label>
+    <div className="relative w-full sm:w-auto">
+      <select
+        value={agentSetKey}
+        onChange={handleAgentChange}
+        className="w-full sm:w-auto appearance-none border border-gray-300 rounded-lg text-base px-3 py-2 pr-8 cursor-pointer focus:outline-none"
+      >
+        {Object.keys(allAgentSets).map((agentKey) => (
+          <option key={agentKey} value={agentKey}>
+            {agentKey}
+          </option>
+        ))}
+      </select>
+      <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-600">
+        <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path
+            fillRule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 10.44l3.71-3.21a.75.75 0 111.04 1.08l-4.25 3.65a.75.75 0 01-1.04 0L5.21 8.27a.75.75 0 01.02-1.06z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
 
-          {agentSetKey && (
-            <div className="flex items-center ml-6">
-              <label className="flex items-center text-base gap-1 mr-2 font-medium">
-                Agent
-              </label>
-              <div className="relative inline-block">
-                <select
-                  value={selectedAgentName}
-                  onChange={handleSelectedAgentChange}
-                  className="appearance-none border border-gray-300 rounded-lg text-base px-2 py-1 pr-8 cursor-pointer font-normal focus:outline-none"
-                >
-                  {selectedAgentConfigSet?.map(agent => (
-                    <option key={agent.name} value={agent.name}>
-                      {agent.name}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-gray-600">
-                  <svg
-                    className="h-4 w-4"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.23 7.21a.75.75 0 011.06.02L10 10.44l3.71-3.21a.75.75 0 111.04 1.08l-4.25 3.65a.75.75 0 01-1.04 0L5.21 8.27a.75.75 0 01.02-1.06z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          )}
+  {/* Agent Dropdown */}
+  {agentSetKey && (
+    <div className="flex items-center w-full sm:w-auto">
+      <label className="text-base font-medium mr-2">Agent</label>
+      <div className="relative w-full sm:w-auto">
+        <select
+          value={selectedAgentName}
+          onChange={handleSelectedAgentChange}
+          className="w-full sm:w-auto appearance-none border border-gray-300 rounded-lg text-base px-3 py-2 pr-8 cursor-pointer focus:outline-none"
+        >
+          {selectedAgentConfigSet?.map((agent) => (
+            <option key={agent.name} value={agent.name}>
+              {agent.name}
+            </option>
+          ))}
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-600">
+          <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              fillRule="evenodd"
+              d="M5.23 7.21a.75.75 0 011.06.02L10 10.44l3.71-3.21a.75.75 0 111.04 1.08l-4.25 3.65a.75.75 0 01-1.04 0L5.21 8.27a.75.75 0 01.02-1.06z"
+              clipRule="evenodd"
+            />
+          </svg>
         </div>
       </div>
+    </div>
+  )}
+</div>
 
       <div className="flex flex-1 gap-2 px-2 overflow-hidden relative">
         <Transcript
