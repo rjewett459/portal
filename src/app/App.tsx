@@ -292,71 +292,7 @@ function App() {
     );
   };
 
-  const handleSendTextMessage = () => {
-    if (!userText.trim()) return;
-    cancelAssistantSpeech();
-
-    sendClientEvent(
-      {
-        type: "conversation.item.create",
-        item: {
-          type: "message",
-          role: "user",
-          content: [{ type: "input_text", text: userText.trim() }],
-        },
-      },
-      "(send user text message)"
-    );
-    setUserText("");
-
-    sendClientEvent({ type: "response.create" }, "trigger response");
-  };
-
-  const handleTalkButtonDown = () => {
-    if (sessionStatus !== "CONNECTED" || dataChannel?.readyState !== "open")
-      return;
-    cancelAssistantSpeech();
-
-    setIsPTTUserSpeaking(true);
-    sendClientEvent({ type: "input_audio_buffer.clear" }, "clear PTT buffer");
-  };
-
-  const handleTalkButtonUp = () => {
-    if (
-      sessionStatus !== "CONNECTED" ||
-      dataChannel?.readyState !== "open" ||
-      !isPTTUserSpeaking
-    )
-      return;
-
-    setIsPTTUserSpeaking(false);
-    sendClientEvent({ type: "input_audio_buffer.commit" }, "commit PTT");
-    sendClientEvent({ type: "response.create" }, "trigger response PTT");
-  };
-
-  const onToggleConnection = () => {
-    if (sessionStatus === "CONNECTED" || sessionStatus === "CONNECTING") {
-      disconnectFromRealtime();
-      setSessionStatus("DISCONNECTED");
-    } else {
-      connectToRealtime();
-    }
-  };
-
-  const handleAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newAgentConfig = e.target.value;
-    const url = new URL(window.location.toString());
-    url.searchParams.set("agentConfig", newAgentConfig);
-    window.location.replace(url.toString());
-  };
-
-  const handleSelectedAgentChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const newAgentName = e.target.value;
-    setSelectedAgentName(newAgentName);
-  };
-
+  
   useEffect(() => {
     const storedPushToTalkUI = localStorage.getItem("pushToTalkUI");
     if (storedPushToTalkUI) {
