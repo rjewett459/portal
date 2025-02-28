@@ -1,140 +1,111 @@
-"use client";
+import React from "react";
+import { SessionStatus } from "@/app/types";
 
-import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { v4 as uuidv4 } from "uuid";
+interface BottomToolbarProps {
+  sessionStatus: SessionStatus;
+  onToggleConnection: () => void;
+  isPTTActive: boolean;
+  setIsPTTActive: (val: boolean) => void;
+  isPTTUserSpeaking: boolean;
+  handleTalkButtonDown: () => void;
+  handleTalkButtonUp: () => void;
+  isEventsPaneExpanded: boolean;
+  setIsEventsPaneExpanded: (val: boolean) => void;
+  isAudioPlaybackEnabled: boolean;
+  setIsAudioPlaybackEnabled: (val: boolean) => void;
+}
 
-import Image from "next/image";
+function BottomToolbar({
+  sessionStatus,
+  onToggleConnection,
+  isPTTActive,
+  setIsPTTActive,
+  isPTTUserSpeaking,
+  handleTalkButtonDown,
+  handleTalkButtonUp,
+  isEventsPaneExpanded,
+  setIsEventsPaneExpanded,
+  isAudioPlaybackEnabled,
+  setIsAudioPlaybackEnabled,
+}: BottomToolbarProps) {
+  const isConnected = sessionStatus === "CONNECTED";
+  const isConnecting = sessionStatus === "CONNECTING";
 
-// UI components
-import Transcript from "./components/Transcript";
-import Events from "./components/Events";
-import BottomToolbar from "./components/BottomToolbar";
+  function getConnectionButtonLabel() {
+    if (isConnected) return "Disconnect";
+    if (isConnecting) return "Connecting...";
+    return "Connect";
+  }
 
-// Types
-import { AgentConfig, SessionStatus } from "@/app/types";
-
-// Context providers & hooks
-import { useTranscript } from "@/app/contexts/TranscriptContext";
-import { useEvent } from "@/app/contexts/EventContext";
-import { useHandleServerEvent } from "./hooks/useHandleServerEvent";
-
-// Utilities
-import { createRealtimeConnection } from "./lib/realtimeConnection";
-
-// Agent configs
-import { allAgentSets, defaultAgentSetKey } from "@/app/agentConfigs";
-
-function App() {
-  const searchParams = useSearchParams();
-
-  const { transcriptItems, addTranscriptMessage, addTranscriptBreadcrumb } =
-    useTranscript();
-  const { logClientEvent, logServerEvent } = useEvent();
-
-  const [selectedAgentName, setSelectedAgentName] = useState<string>("");
-  const [selectedAgentConfigSet, setSelectedAgentConfigSet] =
-    useState<AgentConfig[] | null>(null);
-
-  const [dataChannel, setDataChannel] = useState<RTCDataChannel | null>(null);
-  const pcRef = useRef<RTCPeerConnection | null>(null);
-  const dcRef = useRef<RTCDataChannel | null>(null);
-  const audioElementRef = useRef<HTMLAudioElement | null>(null);
-  const [sessionStatus, setSessionStatus] =
-    useState<SessionStatus>("DISCONNECTED");
-
-  const [isEventsPaneExpanded, setIsEventsPaneExpanded] =
-    useState<boolean>(true);
-  const [userText, setUserText] = useState<string>("");
-  const [isPTTActive, setIsPTTActive] = useState<boolean>(false);
-  const [isPTTUserSpeaking, setIsPTTUserSpeaking] = useState<boolean>(false);
-  const [isAudioPlaybackEnabled, setIsAudioPlaybackEnabled] =
-    useState<boolean>(true);
-
-  useEffect(() => {
-    let finalAgentConfig = searchParams.get("agentConfig");
-    if (!finalAgentConfig || !allAgentSets[finalAgentConfig]) {
-      finalAgentConfig = defaultAgentSetKey;
-      const url = new URL(window.location.toString());
-      url.searchParams.set("agentConfig", finalAgentConfig);
-      window.location.replace(url.toString());
-      return;
+  function getConnectionButtonClasses() {
+    const baseClasses = "text-white text-base p-2 flex items-center justify-center transition-all duration-300";
+    const cursorClass = isConnecting ? "cursor-not-allowed" : "cursor-pointer";
+    const responsiveClasses = "w-36 h-12 rounded-full sm:w-14 sm:h-14 sm:rounded-full";
+    
+    if (isConnected) {
+      return `bg-red-600 hover:bg-red-700 ${cursorClass} ${baseClasses} ${responsiveClasses}`;
     }
-
-    const agents = allAgentSets[finalAgentConfig];
-    const agentKeyToUse = agents[0]?.name || "";
-
-    setSelectedAgentName(agentKeyToUse);
-    setSelectedAgentConfigSet(agents);
-  }, [searchParams]);
+    return `bg-black hover:bg-gray-900 ${cursorClass} ${baseClasses} ${responsiveClasses}`;
+  }
 
   return (
-    <div className="text-base flex flex-col h-screen bg-gray-100 text-gray-800 relative overflow-hidden">  
-      {/* Logo & Header */}
-      <div className="flex flex-col items-center pt-4">
-        <Image src="/chatsites-logo.png" alt="ChatSites Logo" width={80} height={80} className="mb-2" />
-        <div className="text-xl font-semibold">ChatSites™ AI <span className="text-gray-500">Portal</span></div>
-      </div>
+    <div className="fixed bottom-[-80px] left-0 w-full p-4 flex flex-col items-center sm:relative sm:bottom-0">
+      <button
+        onClick={onToggleConnection}
+        className={getConnectionButtonClasses()}
+        disabled={isConnecting}
+      >
+        <span className="text-sm sm:text-xs">{getConnectionButtonLabel()}</span>
+      </button>
 
-      {/* Dropdowns */}
-      <div className="flex justify-center gap-4 py-3">
-        <select
-          value={searchParams.get("agentConfig") || "default"}
-          onChange={(e) => {
-            const url = new URL(window.location.toString());
-            url.searchParams.set("agentConfig", e.target.value);
-            window.location.replace(url.toString());
-          }}
-          className="border border-gray-300 rounded-lg px-3 py-2 cursor-pointer font-normal focus:outline-none"
+      <div className="flex flex-wrap items-center gap-2 mt-4">
+        <input
+          id="push-to-talk"
+          type="checkbox"
+          checked={isPTTActive}
+          onChange={e => setIsPTTActive(e.target.checked)}
+          disabled={!isConnected}
+          className="w-4 h-4"
+        />
+        <label htmlFor="push-to-talk" className="cursor-pointer">Push to talk</label>
+        <button
+          onMouseDown={handleTalkButtonDown}
+          onMouseUp={handleTalkButtonUp}
+          onTouchStart={handleTalkButtonDown}
+          onTouchEnd={handleTalkButtonUp}
+          disabled={!isPTTActive}
+          className={`py-1 px-4 rounded-full ${
+            isPTTUserSpeaking ? "bg-gray-300" : "bg-gray-200"
+          } ${!isPTTActive ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "cursor-pointer"}`}
         >
-          {Object.keys(allAgentSets).map((agentKey) => (
-            <option key={agentKey} value={agentKey}>{agentKey}</option>
-          ))}
-        </select>
-        
-        {selectedAgentConfigSet && (
-          <select
-            value={selectedAgentName}
-            onChange={(e) => setSelectedAgentName(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 cursor-pointer font-normal focus:outline-none"
-          >
-            {selectedAgentConfigSet.map((agent) => (
-              <option key={agent.name} value={agent.name}>{agent.name}</option>
-            ))}
-          </select>
-        )}
+          Talk
+        </button>
       </div>
 
-      {/* Main Chat Area */}
-      <div className="flex flex-1 flex-col px-2 overflow-hidden relative">
-        <Transcript
-          userText={userText}
-          setUserText={setUserText}
-          onSendMessage={() => {}}
-          canSend={sessionStatus === "CONNECTED" && dcRef.current?.readyState === "open"}
-          className="flex-grow"
+      <div className="flex flex-wrap items-center gap-2 mt-4">
+        <input
+          id="audio-playback"
+          type="checkbox"
+          checked={isAudioPlaybackEnabled}
+          onChange={e => setIsAudioPlaybackEnabled(e.target.checked)}
+          disabled={!isConnected}
+          className="w-4 h-4"
         />
-        <Events isExpanded={isEventsPaneExpanded} />
+        <label htmlFor="audio-playback" className="cursor-pointer">Audio playback</label>
       </div>
 
-      {/* Bottom Toolbar (Sticky at the bottom) */}
-      <div className="sticky bottom-0 left-0 right-0 bg-white shadow-lg p-2 flex justify-center">
-        <BottomToolbar
-          sessionStatus={sessionStatus}
-          onToggleConnection={() => {}}
-          isPTTActive={isPTTActive}
-          setIsPTTActive={setIsPTTActive}
-          isPTTUserSpeaking={isPTTUserSpeaking}
-          handleTalkButtonDown={() => {}}
-          handleTalkButtonUp={() => {}}
-          isEventsPaneExpanded={isEventsPaneExpanded}
-          setIsEventsPaneExpanded={setIsEventsPaneExpanded}
-          isAudioPlaybackEnabled={isAudioPlaybackEnabled}
-          setIsAudioPlaybackEnabled={setIsAudioPlaybackEnabled}
+      <div className="flex flex-wrap items-center gap-2 mt-4">
+        <input
+          id="logs"
+          type="checkbox"
+          checked={isEventsPaneExpanded}
+          onChange={e => setIsEventsPaneExpanded(e.target.checked)}
+          className="w-4 h-4"
         />
+        <label htmlFor="logs" className="cursor-pointer">Logs</label>
       </div>
     </div>
   );
 }
 
-export default App;
+export default BottomToolbar;
