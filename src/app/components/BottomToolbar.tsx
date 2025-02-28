@@ -42,15 +42,13 @@ function BottomToolbar({
     const cursorClass = isConnecting ? "cursor-not-allowed" : "cursor-pointer";
 
     if (isConnected) {
-      // Connected -> label "Disconnect" -> red
       return `bg-red-600 hover:bg-red-700 ${cursorClass} ${baseClasses}`;
     }
-    // Disconnected or connecting -> label is either "Connect" or "Connecting" -> black
     return `bg-black hover:bg-gray-900 ${cursorClass} ${baseClasses}`;
   }
 
   return (
-    <div className="p-4 flex flex-row items-center justify-center gap-x-8">
+    <div className="p-4 flex flex-wrap items-center justify-center gap-4 sm:gap-x-8">
       <button
         onClick={onToggleConnection}
         className={getConnectionButtonClasses()}
@@ -59,7 +57,7 @@ function BottomToolbar({
         {getConnectionButtonLabel()}
       </button>
 
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <input
           id="push-to-talk"
           type="checkbox"
@@ -68,26 +66,22 @@ function BottomToolbar({
           disabled={!isConnected}
           className="w-4 h-4"
         />
-        <label htmlFor="push-to-talk" className="flex items-center cursor-pointer">
-          Push to talk
-        </label>
+        <label htmlFor="push-to-talk" className="cursor-pointer">Push to talk</label>
         <button
           onMouseDown={handleTalkButtonDown}
           onMouseUp={handleTalkButtonUp}
           onTouchStart={handleTalkButtonDown}
           onTouchEnd={handleTalkButtonUp}
           disabled={!isPTTActive}
-          className={
-            (isPTTUserSpeaking ? "bg-gray-300" : "bg-gray-200") +
-            " py-1 px-4 cursor-pointer rounded-full" +
-            (!isPTTActive ? " bg-gray-100 text-gray-400" : "")
-          }
+          className={`py-1 px-4 rounded-full ${
+            isPTTUserSpeaking ? "bg-gray-300" : "bg-gray-200"
+          } ${!isPTTActive ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "cursor-pointer"}`}
         >
           Talk
         </button>
       </div>
 
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <input
           id="audio-playback"
           type="checkbox"
@@ -96,12 +90,10 @@ function BottomToolbar({
           disabled={!isConnected}
           className="w-4 h-4"
         />
-        <label htmlFor="audio-playback" className="flex items-center cursor-pointer">
-          Audio playback
-        </label>
+        <label htmlFor="audio-playback" className="cursor-pointer">Audio playback</label>
       </div>
 
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <input
           id="logs"
           type="checkbox"
@@ -109,9 +101,7 @@ function BottomToolbar({
           onChange={e => setIsEventsPaneExpanded(e.target.checked)}
           className="w-4 h-4"
         />
-        <label htmlFor="logs" className="flex items-center cursor-pointer">
-          Logs
-        </label>
+        <label htmlFor="logs" className="cursor-pointer">Logs</label>
       </div>
     </div>
   );
