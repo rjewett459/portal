@@ -38,7 +38,7 @@ function BottomToolbar({
   }
 
   function getConnectionButtonClasses() {
-    const baseClasses = "text-white text-base p-2 w-36 rounded-full h-full";
+    const baseClasses = "text-white text-base p-2 w-14 h-14 rounded-full flex items-center justify-center";
     const cursorClass = isConnecting ? "cursor-not-allowed" : "cursor-pointer";
 
     if (isConnected) {
@@ -51,7 +51,7 @@ function BottomToolbar({
     <div className="p-4 flex flex-wrap items-center justify-center gap-4 sm:gap-x-8">
       <button
         onClick={onToggleConnection}
-        className={`${getConnectionButtonClasses()} sm:w-36 sm:rounded-full w-14 h-14 rounded-full flex items-center justify-center`}
+        className={getConnectionButtonClasses()}
         disabled={isConnecting}
       >
         {getConnectionButtonLabel()}
