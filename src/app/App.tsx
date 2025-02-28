@@ -411,8 +411,8 @@ function App() {
             <Image
             src="/chatsites-logo.png"
             alt="ChatSites Logo"
-            width={35}
-            height={35}
+            width={50}
+            height={50}
             className="mr-2 transparent-logo"
             />
 
