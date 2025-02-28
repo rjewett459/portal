@@ -38,13 +38,14 @@ function BottomToolbar({
   }
 
   function getConnectionButtonClasses() {
-    const baseClasses = "text-white text-base p-2 w-14 h-14 rounded-full flex items-center justify-center";
+    const baseClasses = "text-white text-base p-2 flex items-center justify-center transition-all duration-300";
     const cursorClass = isConnecting ? "cursor-not-allowed" : "cursor-pointer";
-
+    const responsiveClasses = "w-36 h-12 rounded-full sm:w-14 sm:h-14 sm:rounded-full";
+    
     if (isConnected) {
-      return `bg-red-600 hover:bg-red-700 ${cursorClass} ${baseClasses}`;
+      return `bg-red-600 hover:bg-red-700 ${cursorClass} ${baseClasses} ${responsiveClasses}`;
     }
-    return `bg-black hover:bg-gray-900 ${cursorClass} ${baseClasses}`;
+    return `bg-black hover:bg-gray-900 ${cursorClass} ${baseClasses} ${responsiveClasses}`;
   }
 
   return (
@@ -54,7 +55,7 @@ function BottomToolbar({
         className={getConnectionButtonClasses()}
         disabled={isConnecting}
       >
-        {getConnectionButtonLabel()}
+        <span className="text-sm sm:text-xs">{getConnectionButtonLabel()}</span>
       </button>
 
       <div className="flex flex-wrap items-center gap-2">
