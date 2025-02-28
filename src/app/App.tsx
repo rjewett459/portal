@@ -108,7 +108,7 @@ function App() {
         (a) => a.name === selectedAgentName
       );
       addTranscriptBreadcrumb(
-        Agent: ${selectedAgentName},
+        `Agent: ${selectedAgentName}`,
         currentAgent
       );
       updateSession(true);
