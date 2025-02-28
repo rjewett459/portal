@@ -424,6 +424,8 @@ function App() {
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 w-full">
   {/* Industry Dropdown */}
+  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 w-full">
+  {/* Industry Dropdown */}
   <div className="flex items-center w-full sm:w-auto">
     <label className="text-base font-medium mr-2">Industry</label>
     <div className="relative w-full sm:w-auto">
@@ -479,6 +481,7 @@ function App() {
     </div>
   )}
 </div>
+
 
       <div className="flex flex-1 gap-2 px-2 overflow-hidden relative">
         <Transcript
