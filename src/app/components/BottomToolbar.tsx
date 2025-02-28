@@ -51,7 +51,7 @@ function BottomToolbar({
     <div className="p-4 flex flex-wrap items-center justify-center gap-4 sm:gap-x-8">
       <button
         onClick={onToggleConnection}
-        className={getConnectionButtonClasses()}
+        className={`${getConnectionButtonClasses()} sm:w-36 sm:rounded-full w-14 h-14 rounded-full flex items-center justify-center`}
         disabled={isConnecting}
       >
         {getConnectionButtonLabel()}
