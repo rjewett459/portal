@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "ChatSites AI Portal",
   description: "A demo app from ChatSites.",
-  icons: "/favicon.ico", // ✅ Add favicon here
+  icons: "/favicon.png", // ✅ Add favicon here
 };
 
 export default function RootLayout({
