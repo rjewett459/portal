@@ -49,7 +49,7 @@ function BottomToolbar({
   }
 
   return (
-    <div className="fixed bottom-[-80px] left-0 w-full p-4 flex flex-col items-center sm:relative sm:bottom-0">
+    <div className="fixed bottom-[-10px] left-0 w-full p-4 flex flex-col items-center sm:relative sm:bottom-0">
       <button
         onClick={onToggleConnection}
         className={getConnectionButtonClasses()}
