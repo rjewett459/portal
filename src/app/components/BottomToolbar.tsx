@@ -40,7 +40,7 @@ function BottomToolbar({
   function getConnectionButtonClasses() {
     const baseClasses = "text-white text-base p-2 flex items-center justify-center transition-all duration-300";
     const cursorClass = isConnecting ? "cursor-not-allowed" : "cursor-pointer";
-    const responsiveClasses = "w-36 h-12 rounded-full sm:w-14 sm:h-14 sm:rounded-full";
+    const responsiveClasses = "w-36 h-12 rounded-full sm:w-24 sm:h-14 sm:rounded-full";
     
     if (isConnected) {
       return `bg-red-600 hover:bg-red-700 ${cursorClass} ${baseClasses} ${responsiveClasses}`;
