@@ -1,7 +1,3 @@
-Share
-
-
-You said:
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
