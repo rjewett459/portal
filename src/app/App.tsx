@@ -116,13 +116,14 @@ function App() {
   }, [selectedAgentConfigSet, selectedAgentName, sessionStatus]);
 
   useEffect(() => {
-    if (sessionStatus === "CONNECTED") {
-      console.log(
-        updatingSession, isPTTACtive=${isPTTActive} sessionStatus=${sessionStatus}
-      );
-      updateSession();
-    }
-  }, [isPTTActive]);
+  if (sessionStatus === "CONNECTED") {
+    console.log(
+      `updatingSession, isPTTActive=${isPTTActive} sessionStatus=${sessionStatus}`
+    );
+    updateSession();
+  }
+}, [isPTTActive]);
+
 
   const fetchEphemeralKey = async (): Promise<string | null> => {
     logClientEvent({ url: "/session" }, "fetch_session_token_request");
