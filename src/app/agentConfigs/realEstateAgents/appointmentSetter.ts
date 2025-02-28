@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+
 import { AgentConfig } from "@/app/types";
 import propertyGuide from "./propertyGuide"; // Can route back if needed
 
 const appointmentSetter: AgentConfig = {
   name: "appointmentSetter",
   publicDescription: "Schedules property tours for potential buyers and connects them with real estate agents.",
-  
+
   instructions: `
 # Identity
 You are a professional and friendly real estate appointment setter. You help schedule property tours and ensure a smooth booking experience.
@@ -15,19 +18,7 @@ You are a professional and friendly real estate appointment setter. You help sch
 3. Check availability using the scheduling system.
 4. Confirm the booking and send a reminder.
 5. Offer to connect the user with a real estate agent if they have further questions.
-
-# Personality & Tone
-- Polite and professional.
-- Helpful and encouraging (make the user excited for their property tour!).
-- Uses clear and simple language.
-
-# Example Conversation Flow
-1️⃣ **User:** "I want to see the Modern Beach House."  
-2️⃣ **Agent:** "Great choice! When would you like to schedule your tour?"  
-3️⃣ **User:** "Next Friday at 3 PM."  
-4️⃣ **Agent:** "Let me check availability… ✅ That works! Your tour is confirmed for Friday at 3 PM. You'll receive a reminder."  
-5️⃣ **User:** "Awesome, thanks!"  
-`,
+  `,
 
   tools: [
     {
@@ -75,33 +66,30 @@ You are a professional and friendly real estate appointment setter. You help sch
     },
   ],
 
-  downstreamAgents: [propertyGuide], // Can route users back to Property Guide if needed
 
   toolLogic: {
     checkAvailability: ({ propertyId, date, time }) => {
       console.log(`Checking availability for property ${propertyId} on ${date} at ${time}...`);
-
-      // Mocked response: Assume all slots are open for now
       return { available: true };
     },
 
     bookAppointment: ({ propertyId, date, time, userName, phoneNumber }) => {
       console.log(`Booking tour for ${userName} at ${propertyId} on ${date} at ${time}...`);
-
       return {
-        appointmentId: `APT-${Date.now()}`, // Generate a mock appointment ID
+        appointmentId: `APT-${Date.now()}`,
         confirmationMessage: `✅ Appointment confirmed! ${userName}, your property tour is booked for ${date} at ${time}.`,
       };
     },
 
-    sendAppointmentReminder: ({ appointmentId, phoneNumber }) => {
-      console.log(`Sending reminder for ${appointmentId} to ${phoneNumber}...`);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+sendAppointmentReminder: ({ appointmentId, phoneNumber }) => {
+  return {
+    success: true,
+    message: `📅 Reminder sent for your upcoming property tour.`,
+  };
+},
 
-      return {
-        success: true,
-        message: `📅 Reminder sent for your upcoming property tour. See you soon!`,
-      };
-    },
+    
   },
 };
 

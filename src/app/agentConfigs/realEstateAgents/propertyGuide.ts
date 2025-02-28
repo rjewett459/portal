@@ -17,19 +17,8 @@ You are a friendly and knowledgeable real estate agent specializing in helping u
    - Number of bedrooms/bathrooms
 2. Search listings and suggest options.
 3. If the user wants to see a property, transfer them to the Appointment Setter.
-
-# Personality & Tone
-- Warm and approachable, like a helpful real estate agent.
-- Professional but friendly.
-- Uses simple, clear language.
-
-# Example Conversation Flow
-1️⃣ **User:** "I'm looking for a house in Miami under $500K."  
-2️⃣ **Agent:** "Got it! Searching for homes in Miami under $500K... Here are some options!"  
-3️⃣ **User:** "Can I tour the second one?"  
-4️⃣ **Agent:** "Absolutely! I'll connect you with our Appointment Setter to schedule a tour."  
 `,
-  
+
   tools: [
     {
       type: "function",
@@ -77,16 +66,16 @@ You are a friendly and knowledgeable real estate agent specializing in helping u
   
   toolLogic: {
     searchListings: ({ location, budget, propertyType, bedrooms, bathrooms }) => {
-      console.log(`Searching for ${propertyType}s in ${location} under $${budget}...`);
-      
+      console.log(`Searching for a ${bedrooms}-bedroom, ${bathrooms}-bathroom ${propertyType} in ${location} under $${budget}...`);
+
       return {
         properties: [
           {
             id: "MIAMI-001",
             name: "Modern Beach House",
             price: 475000,
-            bedrooms: 3,
-            bathrooms: 2,
+            bedrooms,
+            bathrooms,
             location: "Miami Beach, FL",
             image: "https://example.com/image1.jpg",
           },
@@ -94,15 +83,15 @@ You are a friendly and knowledgeable real estate agent specializing in helping u
             id: "MIAMI-002",
             name: "Luxury Condo",
             price: 490000,
-            bedrooms: 2,
-            bathrooms: 2,
+            bedrooms,
+            bathrooms,
             location: "Downtown Miami, FL",
             image: "https://example.com/image2.jpg",
           },
         ],
       };
     },
-    
+
     filterByBudget: ({ budget }) => {
       console.log(`Filtering properties under $${budget}...`);
       
@@ -119,7 +108,7 @@ You are a friendly and knowledgeable real estate agent specializing in helping u
         ],
       };
     },
-    
+
     viewPropertyDetails: ({ propertyId }) => {
       console.log(`Fetching details for property ID: ${propertyId}...`);
       
@@ -140,4 +129,3 @@ You are a friendly and knowledgeable real estate agent specializing in helping u
 };
 
 export default propertyGuide;
-

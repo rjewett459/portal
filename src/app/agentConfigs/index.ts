@@ -1,9 +1,11 @@
+import realEstateAgents from "./realEstateAgents/realEstateAgents";
+import ecomAgents from "./ecomAgents/ecomAgents";
+import educationAgents from "./educationAgents/educationAgents";
+import financeAgents from "./financeAgents/financeAgents";
+import healthcareAgents from "./healthcareAgents/healthcareAgents";
 import { AllAgentConfigsType } from "@/app/types";
-import realEstateAgents from "./realEstateAgents";
-import ecomAgents from "./ecomAgents";
-import healthcareAgents from "./healthcareAgents";
-import financeAgents from "./financeAgents";
-import educationAgents from "./educationAgents";
+
+
 
 export const allAgentSets: AllAgentConfigsType = {
   "Real Estate": realEstateAgents,

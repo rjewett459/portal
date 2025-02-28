@@ -33,8 +33,13 @@ You are a knowledgeable and highly trained Mortgage Advisor. You assist home buy
       type: "function",
       name: "explainMortgageTypes",
       description: "Provides an overview of different mortgage types and their advantages.",
-      parameters: {},
+      parameters: {
+        type: "object",
+        properties: {},
+        required: [],
+      },
     },
+    
     {
       type: "function",
       name: "calculateAffordability",
