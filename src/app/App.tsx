@@ -405,7 +405,7 @@ function App() {
 
   return (
     <div className="text-base flex flex-col h-screen bg-gray-100 text-gray-800 relative">  
-      <div className="pt-2 text-lg font-semibold flex justify-between items-center">
+      <div className="pt-1 text-lg font-semibold flex justify-between items-center">
         <div className="flex items-center">
           <div onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
             <Image
