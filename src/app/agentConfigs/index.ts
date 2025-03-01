@@ -1,19 +1,19 @@
-import realEstateAgents from "./realEstateAgents/realEstateAgents";
-import ecomAgents from "./ecomAgents/ecomAgents";
-import educationAgents from "./educationAgents/educationAgents";
-import financeAgents from "./financeAgents/financeAgents";
-import healthcareAgents from "./healthcareAgents/healthcareAgents";
-import { AllAgentConfigsType } from "@/app/types";
+import chatSitesAttendant from "./chatSitesAttendant";
+import { realEstateAgents } from "./realEstateAgents/realEstateAgents";
+import { ecomAgents } from "./ecomAgents/ecomAgents";
+import { healthcareAgents } from "./healthcareAgents/healthcareAgents";
+import { financeAgents } from "./financeAgents/financeAgents";
+import { educationAgents } from "./educationAgents/educationAgents";
 
-
-
-export const allAgentSets: AllAgentConfigsType = {
-  "Real Estate": realEstateAgents,
-  "E-commerce": ecomAgents,
-  "Healthcare": healthcareAgents,
-  "Finance": financeAgents,
-  "Education": educationAgents,
+export const allAgentSets = {
+  chatSites: [chatSitesAttendant], // 🌟 The default agent upon page load
+  realEstate: realEstateAgents,
+  ecommerce: ecomAgents,
+  healthcare: healthcareAgents,
+  finance: financeAgents,
+  education: educationAgents,
 };
 
-export const defaultAgentSetKey = Object.keys(allAgentSets)[0];
+export const defaultAgentSetKey = "chatSites"; // 🌟 Ensure the default agent is "ChatSites Attendant"
+
 
