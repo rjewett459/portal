@@ -116,14 +116,13 @@ function App() {
   }, [selectedAgentConfigSet, selectedAgentName, sessionStatus]);
 
   useEffect(() => {
-  if (sessionStatus === "CONNECTED") {
-    console.log(
-      `updatingSession, isPTTActive=${isPTTActive} sessionStatus=${sessionStatus}`
-    );
-    updateSession();
-  }
-}, [isPTTActive]);
-
+    if (sessionStatus === "CONNECTED") {
+      console.log(
+        `updatingSession, isPTTACtive=${isPTTActive} sessionStatus=${sessionStatus}`
+      );
+      updateSession();
+    }
+  }, [isPTTActive]);
 
   const fetchEphemeralKey = async (): Promise<string | null> => {
     logClientEvent({ url: "/session" }, "fetch_session_token_request");
@@ -404,118 +403,73 @@ function App() {
 
   const agentSetKey = searchParams.get("agentConfig") || "default";
 
-  return (
-  <div className="text-base flex flex-col h-screen bg-gray-100 text-gray-800 relative">  
-    <div className="p-5 text-lg font-semibold flex justify-between items-center">
-      <div className="flex items-center">
-        <div onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
-          <Image
-            src="/chatsites-logo.png"
-            alt="ChatSites Logo"
-            width={50}
-            height={50}
-            className="mr-2 transparent-logo"
-          />
-        </div>
+    return (
+    <div className="text-base flex flex-col h-screen bg-gray-100 text-gray-800 relative overflow-hidden">  
+      {/* Logo */}
+      <div className="flex justify-center py-4">
+        <Image src="/chatsites-logo.png" alt="ChatSites Logo" width={80} height={80} className="transparent-logo" />
       </div>
-    </div>
-  </div> // ✅ Make sure all elements are properly closed
-);
-
-          <div>
-            ChatSites™ Portal<span className="text-gray-500"></span>
-          </div>
-        </div>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 w-full">
-  {/* Industry Dropdown */}
-  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 w-full">
-  {/* Industry Dropdown */}
-  <div className="flex items-center w-full sm:w-auto">
-    <label className="text-base font-medium mr-2">Industry</label>
-    <div className="relative w-full sm:w-auto">
-      <select
-        value={agentSetKey}
-        onChange={handleAgentChange}
-        className="w-full sm:w-auto appearance-none border border-gray-300 rounded-lg text-base px-3 py-2 pr-8 cursor-pointer focus:outline-none"
-      >
-        {Object.keys(allAgentSets).map((agentKey) => (
-          <option key={agentKey} value={agentKey}>
-            {agentKey}
-          </option>
-        ))}
-      </select>
-      <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-600">
-        <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 10.44l3.71-3.21a.75.75 0 111.04 1.08l-4.25 3.65a.75.75 0 01-1.04 0L5.21 8.27a.75.75 0 01.02-1.06z"
-            clipRule="evenodd"
-          />
-        </svg>
+      
+      {/* Title */}
+      <div className="text-center text-xl font-semibold pb-2">
+        ChatSites™ AI <span className="text-gray-500">Portal</span>
       </div>
-    </div>
-  </div>
-
-  {/* Agent Dropdown */}
-  {agentSetKey && (
-    <div className="flex items-center w-full sm:w-auto">
-      <label className="text-base font-medium mr-2">Agent</label>
-      <div className="relative w-full sm:w-auto">
+      {/* Dropdowns */}
+      <div className="flex justify-center gap-4 py-2">
         <select
-          value={selectedAgentName}
-          onChange={handleSelectedAgentChange}
-          className="w-full sm:w-auto appearance-none border border-gray-300 rounded-lg text-base px-3 py-2 pr-8 cursor-pointer focus:outline-none"
+          value={agentSetKey}
+          onChange={(e) => {
+            const newAgentConfig = e.target.value;
+            const url = new URL(window.location.toString());
+            url.searchParams.set("agentConfig", newAgentConfig);
+            window.location.replace(url.toString());
+          }}
+          className="border border-gray-300 rounded-lg text-base px-3 py-2 cursor-pointer font-normal focus:outline-none"
         >
-          {selectedAgentConfigSet?.map((agent) => (
-            <option key={agent.name} value={agent.name}>
-              {agent.name}
-            </option>
+          {Object.keys(allAgentSets).map((agentKey) => (
+            <option key={agentKey} value={agentKey}>{agentKey}</option>
           ))}
         </select>
-        <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-600">
-          <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-            <path
-              fillRule="evenodd"
-              d="M5.23 7.21a.75.75 0 011.06.02L10 10.44l3.71-3.21a.75.75 0 111.04 1.08l-4.25 3.65a.75.75 0 01-1.04 0L5.21 8.27a.75.75 0 01.02-1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </div>
+        {agentSetKey && (
+          <select
+            value={selectedAgentName}
+            onChange={(e) => setSelectedAgentName(e.target.value)}
+            className="border border-gray-300 rounded-lg text-base px-3 py-2 cursor-pointer font-normal focus:outline-none"
+          >
+            {selectedAgentConfigSet?.map((agent) => (
+              <option key={agent.name} value={agent.name}>{agent.name}</option>
+            ))}
+          </select>
+        )}
       </div>
-    </div>
-  )}
-</div>
-
-
-      <div className="flex flex-1 gap-2 px-2 overflow-hidden relative">
+      {/* Main Content */}
+      <div className="flex flex-1 flex-col gap-2 px-2 overflow-hidden relative">
         <Transcript
           userText={userText}
           setUserText={setUserText}
-          onSendMessage={handleSendTextMessage}
-          canSend={
-            sessionStatus === "CONNECTED" &&
-            dcRef.current?.readyState === "open"
-          }
+          onSendMessage={() => {}}
+          canSend={sessionStatus === "CONNECTED" && dcRef.current?.readyState === "open"}
+          className="flex-grow"
         />
-
         <Events isExpanded={isEventsPaneExpanded} />
       </div>
-
-      <BottomToolbar
-        sessionStatus={sessionStatus}
-        onToggleConnection={onToggleConnection}
-        isPTTActive={isPTTActive}
-        setIsPTTActive={setIsPTTActive}
-        isPTTUserSpeaking={isPTTUserSpeaking}
-        handleTalkButtonDown={handleTalkButtonDown}
-        handleTalkButtonUp={handleTalkButtonUp}
-        isEventsPaneExpanded={isEventsPaneExpanded}
-        setIsEventsPaneExpanded={setIsEventsPaneExpanded}
-        isAudioPlaybackEnabled={isAudioPlaybackEnabled}
-        setIsAudioPlaybackEnabled={setIsAudioPlaybackEnabled}
-      />
+      {/* Bottom Toolbar (Push to the bottom with scrolling required) */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-y-auto">
+        <BottomToolbar
+          sessionStatus={sessionStatus}
+          onToggleConnection={() => {}}
+          isPTTActive={isPTTActive}
+          setIsPTTActive={setIsPTTActive}
+          isPTTUserSpeaking={isPTTUserSpeaking}
+          handleTalkButtonDown={() => {}}
+          handleTalkButtonUp={() => {}}
+          isEventsPaneExpanded={isEventsPaneExpanded}
+          setIsEventsPaneExpanded={setIsEventsPaneExpanded}
+          isAudioPlaybackEnabled={isAudioPlaybackEnabled}
+          setIsAudioPlaybackEnabled={setIsAudioPlaybackEnabled}
+        />
+      </div>
     </div>
   );
 }
-
 export default App;
