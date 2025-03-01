@@ -38,10 +38,11 @@ function BottomToolbar({
   }
 
   function getConnectionButtonClasses() {
-    const baseClasses = "text-white text-base p-2 flex items-center justify-center transition-all duration-300";
+    const baseClasses =
+      "text-white text-base p-2 flex items-center justify-center transition-all duration-300";
     const cursorClass = isConnecting ? "cursor-not-allowed" : "cursor-pointer";
     const responsiveClasses = "w-36 h-12 rounded-full sm:w-24 sm:h-14 sm:rounded-full";
-    
+
     if (isConnected) {
       return `bg-red-600 hover:bg-red-700 ${cursorClass} ${baseClasses} ${responsiveClasses}`;
     }
@@ -49,8 +50,8 @@ function BottomToolbar({
   }
 
   return (
-    // Added transform, scale-50, and origin-bottom classes to scale the toolbar to half its size.
-    <div className="transform scale-50 origin-bottom fixed bottom-[-10px] left-0 w-full p-4 flex flex-col items-center sm:relative sm:bottom-0">
+    // Changed flex direction to row and replaced vertical margins with horizontal spacing.
+    <div className="transform scale-50 origin-bottom fixed bottom-[-10px] left-0 w-full p-4 flex flex-row items-center justify-center sm:relative sm:bottom-0">
       <button
         onClick={onToggleConnection}
         className={getConnectionButtonClasses()}
@@ -59,7 +60,7 @@ function BottomToolbar({
         <span className="text-sm sm:text-xs">{getConnectionButtonLabel()}</span>
       </button>
 
-      <div className="flex flex-wrap items-center gap-2 mt-4">
+      <div className="flex flex-row items-center gap-2 ml-4">
         <input
           id="push-to-talk"
           type="checkbox"
@@ -68,7 +69,9 @@ function BottomToolbar({
           disabled={!isConnected}
           className="w-4 h-4"
         />
-        <label htmlFor="push-to-talk" className="cursor-pointer">Push to talk</label>
+        <label htmlFor="push-to-talk" className="cursor-pointer">
+          Push to talk
+        </label>
         <button
           onMouseDown={handleTalkButtonDown}
           onMouseUp={handleTalkButtonUp}
@@ -83,7 +86,7 @@ function BottomToolbar({
         </button>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 mt-4">
+      <div className="flex flex-row items-center gap-2 ml-4">
         <input
           id="audio-playback"
           type="checkbox"
@@ -92,10 +95,12 @@ function BottomToolbar({
           disabled={!isConnected}
           className="w-4 h-4"
         />
-        <label htmlFor="audio-playback" className="cursor-pointer">Audio playback</label>
+        <label htmlFor="audio-playback" className="cursor-pointer">
+          Audio playback
+        </label>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 mt-4">
+      <div className="flex flex-row items-center gap-2 ml-4">
         <input
           id="logs"
           type="checkbox"
@@ -103,7 +108,9 @@ function BottomToolbar({
           onChange={e => setIsEventsPaneExpanded(e.target.checked)}
           className="w-4 h-4"
         />
-        <label htmlFor="logs" className="cursor-pointer">Logs</label>
+        <label htmlFor="logs" className="cursor-pointer">
+          Logs
+        </label>
       </div>
     </div>
   );
