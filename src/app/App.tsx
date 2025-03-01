@@ -405,7 +405,7 @@ function App() {
 
   return (
     <div className="text-base flex flex-col h-screen bg-gray-100 text-gray-800 relative">  
-      <div className="p-5 text-lg font-semibold flex justify-between items-center">
+      <div className="absolute top-0 left-0 w-full flex justify-center">
         <div className="flex items-center">
           <div onClick={() => window.location.reload()} style={{ cursor: 'pointer' }}>
             <Image
@@ -418,7 +418,7 @@ function App() {
 
           </div>
           <div>
-            ChatSites™ AI <span className="text-gray-500">Portal</span>
+            ChatSites™ Portal <span className="text-gray-500"></span>
           </div>
         </div>
         <div className="flex items-center">
