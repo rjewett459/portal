@@ -1,4 +1,4 @@
-import chatSitesAttendant from "./chatSitesAttendant";
+import chatSitesAttendant from "./chatSitesAttendant/chatSitesAttendant"; // ✅ Correct path
 import { realEstateAgents } from "./realEstateAgents/realEstateAgents";
 import { ecomAgents } from "./ecomAgents/ecomAgents";
 import { healthcareAgents } from "./healthcareAgents/healthcareAgents";
