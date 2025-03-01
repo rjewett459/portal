@@ -49,7 +49,8 @@ function BottomToolbar({
   }
 
   return (
-    <div className="fixed bottom-[-10px] left-0 w-full p-4 flex flex-col items-center sm:relative sm:bottom-0">
+    // Added transform, scale-50, and origin-bottom classes to scale the toolbar to half its size.
+    <div className="transform scale-50 origin-bottom fixed bottom-[-10px] left-0 w-full p-4 flex flex-col items-center sm:relative sm:bottom-0">
       <button
         onClick={onToggleConnection}
         className={getConnectionButtonClasses()}
