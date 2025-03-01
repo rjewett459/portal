@@ -1,12 +1,12 @@
-import chatSitesAttendant from "./chatSitesAttendant/chatSitesAttendant"; // ✅ Correct path
+import chatSitesAttendant from "./chatSitesAttendant"; 
 import { realEstateAgents } from "./realEstateAgents/realEstateAgents";
 import { ecomAgents } from "./ecomAgents/ecomAgents";
 import { healthcareAgents } from "./healthcareAgents/healthcareAgents";
 import { financeAgents } from "./financeAgents/financeAgents";
 import { educationAgents } from "./educationAgents/educationAgents";
 
-export const allAgentSets = {
-  chatSites: [chatSitesAttendant], // 🌟 The default agent upon page load
+export const allAgentSets: Record<string, AgentConfig[]> = {
+  chatSites: [chatSitesAttendant],
   realEstate: realEstateAgents,
   ecommerce: ecomAgents,
   healthcare: healthcareAgents,
@@ -14,6 +14,6 @@ export const allAgentSets = {
   education: educationAgents,
 };
 
-export const defaultAgentSetKey = "chatSites"; // 🌟 Ensure the default agent is "ChatSites Attendant"
 
+export const defaultAgentSetKey = "chatSites";
 
