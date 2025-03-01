@@ -422,8 +422,6 @@ function App() {
   </div> // ✅ Make sure all elements are properly closed
 );
 
-
-          </div>
           <div>
             ChatSites™ Portal<span className="text-gray-500"></span>
           </div>
